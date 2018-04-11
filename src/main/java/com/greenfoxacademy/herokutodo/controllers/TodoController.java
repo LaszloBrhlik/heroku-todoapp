@@ -48,7 +48,7 @@ public class TodoController {
       return "redirect:/";
     } else {
       model.addAttribute("todo", todo);
-      return "edit";
+      return "/edit";
     }
   }
 
