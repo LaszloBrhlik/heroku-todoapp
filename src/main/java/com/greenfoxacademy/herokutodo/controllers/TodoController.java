@@ -24,24 +24,24 @@ public class TodoController {
     }
   }
 
-  @GetMapping(value = "/add")
+  @GetMapping(value = "add")
   public String showAddPage() {
     return "add";
   }
 
-  @PostMapping("/add")
+  @PostMapping("add")
   public String add(@ModelAttribute(name = "title") String title) {
     todoRepository.save(new Todo(title));
     return "redirect:/";
   }
 
-  @GetMapping("/{id}/delete")
+  @GetMapping("{id}/delete")
   public String delete(@PathVariable long id) {
     todoRepository.deleteById(id);
     return "redirect:/";
   }
 
-  @GetMapping("/{id}/edit")
+  @GetMapping("{id}/edit")
   public String edit(@PathVariable long id, Model model) {
     Todo todo = todoRepository.findById(id).orElse(null);
     if (todo == null) {
@@ -52,8 +52,8 @@ public class TodoController {
     }
   }
 
-  @PostMapping("/edit")
-  public String edit(@ModelAttribute Todo todo) {
+  @PostMapping("{id}/edit")
+  public String edit(@PathVariable("id") String id, @ModelAttribute("todo") Todo todo) {
     todoRepository.save(todo);
     return "redirect:/";
   }
