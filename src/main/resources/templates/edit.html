@@ -9,13 +9,13 @@
 
 <h1>Add new todo</h1>
 
-<form action="#" th:action="@{/todo/edit}" th:object="${todo}" method="post">
-    <label for="todotitle">New todo description:</label>
-    <input type="text" id="todotitle" th:value="*{title}" name="title"/>
+<form action="#" th:action="@{/edit}" th:object="${todo}" method="post">
+    <label for="title">New todo description:</label>
+    <input type="text" id="title" th:value="*{title}" name="title"/>
     <p>Is it urgent?<input type="checkbox" name="urgent" th:checked="*{urgent}"></p>
     <p>Is it done?<input type="checkbox" name="done" th:checked="*{done}"></p>
     <input type="submit" value="Press the button to modify"/>
-    <a href="/todo">Back to main</a>
+    <a href="/">Back to main</a>
 </form>
 
 </body>

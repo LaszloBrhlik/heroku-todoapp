@@ -8,7 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping(value = "/todo")
 public class TodoController {
 
   @Autowired
@@ -31,26 +30,31 @@ public class TodoController {
   }
 
   @PostMapping("/add")
-  public String add(@ModelAttribute(name = "todotitle") String title) {
+  public String add(@ModelAttribute(name = "title") String title) {
     todoRepository.save(new Todo(title));
     return "redirect:/todo/";
   }
 
-  @GetMapping("/{todoId}/delete")
-  public String delete(@PathVariable Long todoId) {
-    todoRepository.deleteById(todoId);
-    return "redirect:/todo/";
+  @GetMapping("/{id}/delete")
+  public String delete(@PathVariable long id) {
+    todoRepository.deleteById(id);
+    return "redirect:/";
   }
 
-  @GetMapping("/{todoId}/edit")
-  public String edit(@PathVariable Long todoId, Model model) {
-    model.addAttribute("todo", todoRepository.findById(todoId).get());
-    return "edit";
+  @GetMapping("/{id}/edit")
+  public String edit(@PathVariable long id, Model model) {
+    Todo todo = todoRepository.findById(id).orElse(null);
+    if (todo == null) {
+      return "redirect:/";
+    } else {
+      model.addAttribute("todo", todo);
+      return "edit";
+    }
   }
 
-  @PostMapping("/{todoId}/edit")
-  public String edit(@ModelAttribute(name = "todotitle") Todo todomodified){
-    todoRepository.save(todomodified);
-    return "redirect:/todo/";
+  @PostMapping("/edit")
+  public String edit(@ModelAttribute Todo todo) {
+    todoRepository.save(todo);
+    return "redirect:/";
   }
 }
