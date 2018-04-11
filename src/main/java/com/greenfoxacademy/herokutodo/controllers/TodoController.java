@@ -44,7 +44,7 @@ public class TodoController {
 
   @GetMapping("/{todoId}/edit")
   public String edit(@PathVariable Long todoId, Model model) {
-    model.addAttribute("todo", todoRepository.findById(todoId));
+    model.addAttribute("todo", todoRepository.findById(todoId).get());
     return "edit";
   }
 
