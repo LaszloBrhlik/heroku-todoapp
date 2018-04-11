@@ -9,7 +9,7 @@
 
 <h1>Edit todo</h1>
 
-<form action="#" th:action="@{/edit}" th:object="${todo}" method="post">
+<form action="#" th:action="@{edit}" th:object="${todo}" method="post">
     <label for="title">New todo description:</label>
     <input type="text" id="title" th:value="*{title}" name="title"/>
     <p>Is it urgent?<input type="checkbox" name="urgent" th:checked="*{urgent}"></p>
