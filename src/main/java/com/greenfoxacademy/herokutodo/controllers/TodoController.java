@@ -32,7 +32,7 @@ public class TodoController {
   @PostMapping("/add")
   public String add(@ModelAttribute(name = "title") String title) {
     todoRepository.save(new Todo(title));
-    return "redirect:/todo/";
+    return "redirect:/";
   }
 
   @GetMapping("/{id}/delete")
@@ -52,7 +52,7 @@ public class TodoController {
     }
   }
 
-  @PostMapping("/edit")
+  @PostMapping("/{id}/edit")
   public String edit(@ModelAttribute Todo todo) {
     todoRepository.save(todo);
     return "redirect:/";
