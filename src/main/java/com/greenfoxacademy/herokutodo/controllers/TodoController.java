@@ -62,7 +62,7 @@ public class TodoController {
   @GetMapping("search")
   public String search(@ModelAttribute(name = "title") String title, Model model) {
     if (!title.isEmpty()) {
-      model.addAttribute("todosFiltered", todoRepository.customTitleFinder(title));
+      model.addAttribute("todos", todoRepository.customTitleFinder(title));
       return "todoslist";
     } else {
       model.addAttribute("todos", todoRepository.findAllByOrderById());
