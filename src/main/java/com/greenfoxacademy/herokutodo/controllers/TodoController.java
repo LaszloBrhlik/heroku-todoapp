@@ -57,4 +57,9 @@ public class TodoController {
     todoRepository.save(todo);
     return "redirect:/";
   }
+
+  @GetMapping(value = "test")
+  public String showTest() {
+    return "test";
+  }
 }
