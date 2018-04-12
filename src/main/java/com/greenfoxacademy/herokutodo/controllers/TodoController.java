@@ -32,8 +32,12 @@ public class TodoController {
 
   @PostMapping("add")
   public String add(@ModelAttribute(name = "title") String title) {
-    todoRepository.save(new Todo(title));
-    return "redirect:/";
+    if (!title.isEmpty()) {
+      todoRepository.save(new Todo(title));
+      return "redirect:/add";
+    } else {
+      return "redirect:/add";
+    }
   }
 
   @GetMapping("{id}/delete")
@@ -55,7 +59,13 @@ public class TodoController {
 
   @PostMapping("{id}/edit")
   public String edit(@ModelAttribute("todo") Todo todo) {
-    todoRepository.save(todo);
+    Todo todoTemp = todoRepository.findById(todo.getId()).orElse(null);
+    if (!todo.getTitle().isEmpty()) {
+      todoRepository.save(todo);
+    } else {
+      todo.setTitle(todoTemp.getTitle());
+      todoRepository.save(todo);
+    }
     return "redirect:/";
   }
 

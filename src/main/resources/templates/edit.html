@@ -1,23 +1,54 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <title>Thymeleaf Exercise #</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
     <link rel="stylesheet" th:href="@{/css/style.css}"/>
     <meta charset="utf-8"/>
 </head>
 <body>
 
-<h1>Edit todo</h1>
+<h1 class="text-center">
+    <a href="/">EDIT TODO</a>
+</h1>
 
-<form action="#" th:action="@{edit}" th:object="${todo}" method="post">
-    <label for="title">New todo description:</label>
-    <input type="text" id="title" th:value="*{title}" name="title"/>
-    <p>Is it urgent?<input type="checkbox" name="urgent" th:checked="*{urgent}"></p>
-    <p>Is it done?<input type="checkbox" name="done" th:checked="*{done}"></p>
-    <input type="submit" value="Press the button to modify"/>
-    <a href="/">Back to main</a>
-</form>
+<div class="container">
+
+    <div class="row">
+        <div class="col-sm">
+
+            <h4>
+                <a role=button class="btn btn-primary" href="/">Home</a>
+            </h4>
+
+            <form action="#" th:action="@{edit}" th:object="${todo}" method="post">
+
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary" type="submit">Edit!</button>
+                    </span>
+                    <input type="text" class="form-control" th:placeholder="*{title}" name="title"/>
+                </div>
+
+                <div class="input-group">
+                    <input type="checkbox" name="urgent" th:checked="*{urgent}">
+                    Urgent?
+                    </input>
+                </div>
+
+                <div class="input-group">
+
+                    <input type="checkbox" name="done" th:checked="*{done}">
+                    Done?
+                    </input>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
 <script src="webjars/jquery/1.11.1/jquery.min.js"></script>
 <script src="webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
 </body>
