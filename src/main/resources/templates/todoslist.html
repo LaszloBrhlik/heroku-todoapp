@@ -9,15 +9,28 @@
 </head>
 <body>
 
-<h1 class="text-center">TODOS FOR TODAY</h1>
+<h1 class="text-center">
+    <a href="/">TODOS FOR TODAY</a>
+</h1>
 
 <div class="container">
 
     <div class="row">
         <div class="col-sm">
+
             <h4>
                 <a role=button class="btn btn-primary" href="/add">Add new todo</a>
             </h4>
+
+            <form action="#" th:action="@{search}" method="get">
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary" type="submit">Go!</button>
+                    </span>
+                    <input type="text" class="form-control" placeholder="Search for..." name="title"/>
+                </div>
+            </form>
+
             <table class="table table-striped table-dark">
                 <thead>
                 <tr>
@@ -42,6 +55,7 @@
                 </tr>
                 </tbody>
             </table>
+
         </div>
     </div>
 </div>

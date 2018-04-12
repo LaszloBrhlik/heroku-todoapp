@@ -25,7 +25,8 @@ public class TodoController {
   }
 
   @GetMapping(value = "add")
-  public String showAddPage() {
+  public String showAddPage(Model model) {
+    model.addAttribute("todos", todoRepository.findAllByOrderById());
     return "add";
   }
 
@@ -56,5 +57,16 @@ public class TodoController {
   public String edit(@ModelAttribute("todo") Todo todo) {
     todoRepository.save(todo);
     return "redirect:/";
+  }
+
+  @GetMapping("search")
+  public String search(@ModelAttribute(name = "title") String title, Model model) {
+    if (!title.isEmpty()) {
+      model.addAttribute("todosFiltered", todoRepository.customTitleFinder(title));
+      return "todoslist";
+    } else {
+      model.addAttribute("todos", todoRepository.findAllByOrderById());
+      return "todoslist";
+    }
   }
 }
