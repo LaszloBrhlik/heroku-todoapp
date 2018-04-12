@@ -50,9 +50,10 @@ public class TodoController {
   public String edit(@PathVariable long id, Model model) {
     Todo todo = todoRepository.findById(id).orElse(null);
     if (todo == null) {
-      return "redirect:/";
+      return "redirect:/edit";
     } else {
       model.addAttribute("todo", todo);
+      model.addAttribute("todos", todoRepository.findAllByOrderById());
       return "edit";
     }
   }

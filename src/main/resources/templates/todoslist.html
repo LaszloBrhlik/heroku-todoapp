@@ -10,13 +10,13 @@
 <body>
 
 <h1 class="text-center">
-    <a href="/">TODOS FOR TODAY</a>
+    <a href="/">TODOs FOR TODAY</a>
 </h1>
 
 <div class="container">
 
     <div class="row">
-        <div class="col-sm">
+        <div class="col-xs">
 
             <h4>
                 <a role=button class="btn btn-primary" href="/add">Add new todo</a>
@@ -37,20 +37,26 @@
                 <tr>
                     <td>ID</td>
                     <td>TITLE</td>
-                    <td>DONE</td>
-                    <td>URGENT</td>
+                    <td class="fix-table-column">DONE</td>
+                    <td class="fix-table-column">URGENT</td>
+                    <td class="fix-table-column">DELETE</td>
+                    <td class="fix-table-column">EDIT</td>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="todo : ${todos}">
                     <td th:text="${todo.getId()}"></td>
                     <td th:text="${todo.getTitle()}"></td>
-                    <td th:text="${todo.isDone()}"></td>
-                    <td th:text="${todo.isUrgent()}"></td>
-                    <td>
+                    <td class="fix-table-column">
+                        <span th:class="${todo.isDone()} ? 'glyphicon glyphicon-ok text-success' : 'glyphicon glyphicon-remove text-danger'"/>
+                    </td>
+                    <td class="fix-table-column">
+                        <span th:class="${todo.isUrgent()} ? 'glyphicon glyphicon-ok text-success' : 'glyphicon glyphicon-remove text-danger'"/>
+                    </td>
+                    <td class="fix-table-column">
                         <a th:href="'/' + ${todo.getId()} + '/delete'">delete</a>
                     </td>
-                    <td>
+                    <td class="fix-table-column">
                         <a th:href="'/' + ${todo.getId()} + '/edit'">edit</a>
                     </td>
                 </tr>
