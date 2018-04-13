@@ -1,9 +1,6 @@
 package com.greenfoxacademy.herokutodo.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Todo {
@@ -12,19 +9,24 @@ public class Todo {
   @Id
   private long id;
   private String title;
-  private boolean urgent;
-  private boolean done;
+  private boolean urgent = false;
+  private boolean done = false;
 
-  // Default constructor for entitiy
+  @ManyToOne
+  private Assignee assignee;
+
+  // Default constructor
   public Todo() {
-    this.urgent = false;
-    this.done = false;
+  }
+
+  public Todo(String title, boolean urgent, boolean done) {
+    this.title = title;
+    this.urgent = urgent;
+    this.done = done;
   }
 
   public Todo(String title) {
     this.title = title;
-    this.urgent = false;
-    this.done = false;
   }
 
   public long getId() {
@@ -57,5 +59,13 @@ public class Todo {
 
   public void setDone(boolean done) {
     this.done = done;
+  }
+
+  public Assignee getAssignee() {
+    return assignee;
+  }
+
+  public void setAssignee(Assignee assignee) {
+    this.assignee = assignee;
   }
 }

@@ -1,6 +1,8 @@
 package com.greenfoxacademy.herokutodo.controllers;
 
+import com.greenfoxacademy.herokutodo.models.Assignee;
 import com.greenfoxacademy.herokutodo.models.Todo;
+import com.greenfoxacademy.herokutodo.repositories.AssigneeRepository;
 import com.greenfoxacademy.herokutodo.repositories.TodoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,8 +15,11 @@ public class TodoController {
   @Autowired
   private TodoRepository todoRepository;
 
-  @GetMapping(value = {"/", "/list"})
-  public String list(@RequestParam(name = "isActive", required = false) boolean isActive, Model model) {
+  @Autowired
+  private AssigneeRepository assigneeRepository;
+
+  @GetMapping(value = {"/"})
+  public String showTodos(@RequestParam(name = "isActive", required = false) boolean isActive, Model model) {
     if (isActive) {
       model.addAttribute("todos", todoRepository.findAllByDoneIsFalseOrderById());
       return "todoslist";
@@ -24,42 +29,42 @@ public class TodoController {
     }
   }
 
-  @GetMapping(value = "add")
+  @GetMapping(value = "addtodo")
   public String showAddPage(Model model) {
     model.addAttribute("todos", todoRepository.findAllByOrderById());
-    return "add";
+    return "addtodo";
   }
 
-  @PostMapping("add")
-  public String add(@ModelAttribute(name = "title") String title) {
+  @PostMapping("addtodo")
+  public String addTodo(@ModelAttribute(name = "title") String title) {
     if (!title.isEmpty()) {
       todoRepository.save(new Todo(title));
-      return "redirect:/add";
+      return "redirect:/addtodo";
     } else {
-      return "redirect:/add";
+      return "redirect:/addtodo";
     }
   }
 
-  @GetMapping("{id}/delete")
-  public String delete(@PathVariable long id) {
+  @GetMapping("{id}/deletetodo")
+  public String deleteTodo(@PathVariable long id) {
     todoRepository.deleteById(id);
     return "redirect:/";
   }
 
-  @GetMapping("{id}/edit")
-  public String edit(@PathVariable long id, Model model) {
+  @GetMapping("{id}/edittodo")
+  public String editTodo(@PathVariable long id, Model model) {
     Todo todo = todoRepository.findById(id).orElse(null);
     if (todo == null) {
-      return "redirect:/edit";
+      return "redirect:/edittodo";
     } else {
       model.addAttribute("todo", todo);
       model.addAttribute("todos", todoRepository.findAllByOrderById());
-      return "edit";
+      return "edittodo";
     }
   }
 
-  @PostMapping("{id}/edit")
-  public String edit(@ModelAttribute("todo") Todo todo) {
+  @PostMapping("{id}/edittodo")
+  public String editTodo(@ModelAttribute("todo") Todo todo) {
     Todo todoTemp = todoRepository.findById(todo.getId()).orElse(null);
     if (!todo.getTitle().isEmpty()) {
       todoRepository.save(todo);
@@ -70,8 +75,8 @@ public class TodoController {
     return "redirect:/";
   }
 
-  @GetMapping("search")
-  public String search(@ModelAttribute(name = "title") String title, Model model) {
+  @GetMapping("searchtodo")
+  public String searchTodo(@ModelAttribute(name = "title") String title, Model model) {
     if (!title.isEmpty()) {
       model.addAttribute("todos", todoRepository.customTitleFinder(title));
       return "todoslist";
@@ -79,5 +84,24 @@ public class TodoController {
       model.addAttribute("todos", todoRepository.findAllByOrderById());
       return "todoslist";
     }
+  }
+
+  @GetMapping("{id}/assigntodo")
+  public String assignTodo(@PathVariable long id, Model model) {
+    Todo todo = todoRepository.findById(id).orElse(null);
+    model.addAttribute("assignees",assigneeRepository.findAll());
+    model.addAttribute("todo", todo);
+    return "assigntodo";
+  }
+
+  @PostMapping("{id}/assigntodo")
+  public String assignTodo(
+          @ModelAttribute(name = "name") String name,
+          @ModelAttribute(name = "id") Long id
+  ) {
+    Todo todoTemp = todoRepository.findById(id).orElse(null);
+    Assignee assignee = assigneeRepository.findById(name).orElse(null);
+    todoTemp.setAssignee(assignee);
+    return "redirect:/";
   }
 }

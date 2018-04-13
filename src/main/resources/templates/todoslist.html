@@ -19,11 +19,12 @@
         <div class="col-xs">
 
             <h4>
-                <a role=button class="btn btn-primary" href="/add">Add new todo</a>
                 <a role=button class="btn btn-primary" href="/">Home</a>
+                <a role=button class="btn btn-primary" href="/addtodo">Add new todo</a>
+                <a role=button class="btn btn-primary" href="/assigneeslist">Assignees</a>
             </h4>
 
-            <form action="#" th:action="@{search}" method="get">
+            <form action="#" th:action="@{searchtodo}" method="get">
                 <div class="input-group">
                     <span class="input-group-btn">
                         <button class="btn btn-primary" type="submit">Go!</button>
@@ -37,16 +38,19 @@
                 <tr>
                     <td>ID</td>
                     <td>TITLE</td>
+                    <td>ASSIGNEE</td>
                     <td class="fix-table-column">DONE</td>
                     <td class="fix-table-column">URGENT</td>
-                    <td class="fix-table-column">DELETE</td>
-                    <td class="fix-table-column">EDIT</td>
+                    <td class="fix-table-column">ASSIGN TODO</td>
+                    <td class="fix-table-column">EDIT TODO</td>
+                    <td class="fix-table-column">DELETE TODO</td>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="todo : ${todos}">
                     <td th:text="${todo.getId()}"></td>
                     <td th:text="${todo.getTitle()}"></td>
+                    <td th:text="${todo.getAssignee()}"></td>
                     <td class="fix-table-column">
                         <span th:class="${todo.isDone()} ? 'glyphicon glyphicon-ok text-success' : 'glyphicon glyphicon-remove text-danger'"/>
                     </td>
@@ -54,10 +58,13 @@
                         <span th:class="${todo.isUrgent()} ? 'glyphicon glyphicon-ok text-success' : 'glyphicon glyphicon-remove text-danger'"/>
                     </td>
                     <td class="fix-table-column">
-                        <a th:href="'/' + ${todo.getId()} + '/delete'">delete</a>
+                        <a th:href="'/' + ${todo.getId()} + '/assigntodo'">assign</a>
                     </td>
                     <td class="fix-table-column">
-                        <a th:href="'/' + ${todo.getId()} + '/edit'">edit</a>
+                        <a th:href="'/' + ${todo.getId()} + '/edittodo'">edit</a>
+                    </td>
+                    <td class="fix-table-column">
+                        <a th:href="'/' + ${todo.getId()} + '/deletetodo'">delete</a>
                     </td>
                 </tr>
                 </tbody>

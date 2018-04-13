@@ -10,7 +10,7 @@
 <body>
 
 <h1 class="text-center">
-    <a href="/add">ADD NEW TODO</a>
+    <a href="/addtodo">ADD NEW TODO</a>
 </h1>
 
 <div class="container">
@@ -18,17 +18,15 @@
     <div class="row">
         <div class="col-sm">
 
-            <h4>
-                <a role=button class="btn btn-primary" href="/">Home</a>
-            </h4>
+            <form action="#" th:action="@{addtodo}" method="post">
 
-            <form action="#" th:action="@{add}" method="post">
-                <div class="input-group">
-                    <span class="input-group-btn">
-                        <button class="btn btn-primary" type="submit">Add!</button>
-                    </span>
+                <a role=button class="btn btn-primary" href="/">Home</a>
+                <button class="btn btn-primary" type="submit">Add!</button>
+
+                <div class="input-group-addon">
                     <input type="text" class="form-control" placeholder="Add new todo..." name="title"/>
                 </div>
+
             </form>
 
             <table class="table table-striped table-dark">
