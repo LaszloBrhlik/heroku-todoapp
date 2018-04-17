@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 public class TodoController {
 
@@ -97,11 +99,13 @@ public class TodoController {
   @PostMapping("{id}/assigntodo")
   public String assignTodo(
           @ModelAttribute(name = "name") String name,
-          @ModelAttribute(name = "id") Long id
+          @PathVariable(name = "id") long id
   ) {
-    Todo todoTemp = todoRepository.findById(id).orElse(null);
-    Assignee assignee = assigneeRepository.findById(name).orElse(null);
-    todoTemp.setAssignee(assignee);
+    List<Assignee> assigneesTemp = assigneeRepository.customNameFinder(name);
+    Assignee assigneeTemp = assigneesTemp.get(0);
+    Todo todo = todoRepository.findById(id).orElse(null);
+    todo.setAssignee(assigneeTemp);
+    todoRepository.save(todo);
     return "redirect:/";
   }
 }

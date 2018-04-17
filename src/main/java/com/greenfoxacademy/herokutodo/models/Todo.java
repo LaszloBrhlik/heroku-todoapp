@@ -12,7 +12,8 @@ public class Todo {
   private boolean urgent = false;
   private boolean done = false;
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "assignee_name")
   private Assignee assignee;
 
   // Default constructor

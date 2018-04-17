@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Todo Application</title>
+    <title>Thymeleaf Exercise #</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
     <link rel="stylesheet" th:href="@{/css/style.css}"/>
@@ -10,27 +10,23 @@
 <body>
 
 <h1 class="text-center">
-    <a href="/">TODOs FOR TODAY</a>
+    <a href="/addtodo">ADD NEW TODO</a>
 </h1>
 
 <div class="container">
 
     <div class="row">
-        <div class="col-xs">
+        <div class="col-sm">
 
-            <h4>
+            <form action="#" th:action="@{addtodo}" method="post">
+
                 <a role=button class="btn btn-primary" href="/">Home</a>
-                <a role=button class="btn btn-primary" href="/addtodo">Add new todo</a>
-                <a role=button class="btn btn-primary" href="/assigneeslist">Assignees</a>
-            </h4>
+                <button class="btn btn-primary" type="submit">Add!</button>
 
-            <form action="#" th:action="@{searchtodo}" method="get">
-                <div class="input-group">
-                    <span class="input-group-btn">
-                        <button class="btn btn-primary" type="submit">Go!</button>
-                    </span>
-                    <input type="text" class="form-control" placeholder="Search for title..." name="title"/>
+                <div class="input-group-addon">
+                    <input type="text" class="form-control" placeholder="Add new todo..." name="title"/>
                 </div>
+
             </form>
 
             <table class="table table-striped table-dark">
@@ -38,38 +34,23 @@
                 <tr>
                     <td>ID</td>
                     <td>TITLE</td>
-                    <td>ASSIGNEE</td>
                     <td class="fix-table-column">DONE</td>
                     <td class="fix-table-column">URGENT</td>
-                    <td class="fix-table-column">ASSIGN TODO</td>
-                    <td class="fix-table-column">EDIT TODO</td>
-                    <td class="fix-table-column">DELETE TODO</td>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="todo : ${todos}">
                     <td th:text="${todo.getId()}"></td>
                     <td th:text="${todo.getTitle()}"></td>
-                    <td th:text="${todo.getAssignee() != null} ? ${todo.getAssignee().getName()}"></td>
                     <td class="fix-table-column">
                         <span th:class="${todo.isDone()} ? 'glyphicon glyphicon-ok text-success' : 'glyphicon glyphicon-remove text-danger'"/>
                     </td>
                     <td class="fix-table-column">
                         <span th:class="${todo.isUrgent()} ? 'glyphicon glyphicon-ok text-success' : 'glyphicon glyphicon-remove text-danger'"/>
                     </td>
-                    <td class="fix-table-column">
-                        <a th:href="'/' + ${todo.getId()} + '/assigntodo'">assign</a>
-                    </td>
-                    <td class="fix-table-column">
-                        <a th:href="'/' + ${todo.getId()} + '/edittodo'">edit</a>
-                    </td>
-                    <td class="fix-table-column">
-                        <a th:href="'/' + ${todo.getId()} + '/deletetodo'">delete</a>
-                    </td>
                 </tr>
                 </tbody>
             </table>
-
         </div>
     </div>
 </div>

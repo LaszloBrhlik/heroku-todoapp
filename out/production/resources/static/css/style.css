@@ -1,9 +1,8 @@
-td {
-    padding: 10px;
-    border: 1px solid dimgrey;
+.fix-table-column {
+    text-align: center;
+    max-width: 5%;
 }
 
-input {
-    display: block;
-    margin-bottom: 10px;
+.btn-primary {
+    margin-bottom: 5px;
 }
